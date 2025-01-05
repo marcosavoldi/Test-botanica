@@ -1,14 +1,16 @@
 /* Stile base: font e layout generali */
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 10px;
     background-color: #f0f2f5;
     color: #343a40;
-  }
-  #container {
+    font-size: 16px; /* Font base più grande */
+    line-height: 1.5; /* Migliora la leggibilità */
+}
+#container {
     margin-top: 20px;
-  }
-  button {
+}
+button {
     margin-right: 10px;
     padding: 10px 15px;
     cursor: pointer;
@@ -17,60 +19,67 @@ body {
     color: #fff;
     font-size: 1rem;
     border-radius: 5px;
-  }
-  button:hover {
+}
+button:hover {
     background-color: #0056b3;
-  }
-  #test-container {
+}
+#test-container {
     margin-top: 20px;
     display: none;
-  }
-  /* Box domande: sfondo chiaro, bordo e angoli arrotondati */
-  .domanda {
+}
+/* Box domande: sfondo chiaro, bordo e angoli arrotondati */
+.domanda {
     background-color: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 6px;
     padding: 10px;
     margin-bottom: 15px;
-  }
-  /* Titolo delle domande leggermente più grande e in grassetto */
-  .domanda h3 {
-    font-size: 1.1rem;
+}
+/* Titolo delle domande leggermente più grande e in grassetto */
+.domanda h3 {
+    font-size: 1.2rem;
     margin-bottom: 8px;
-  }
-  /* Risultato finale (punteggio e messaggio) */
-  .risultato {
+}
+/* Risultato finale (punteggio e messaggio) */
+.risultato {
     margin-top: 20px;
     font-weight: bold;
-    font-size: 1.1rem;
-  }
-  /* Classe per nascondere elementi */
-  .hidden {
+    font-size: 1.2rem;
+}
+/* Classe per nascondere elementi */
+.hidden {
     display: none;
-  }
-  /* Evidenziamo la risposta corretta in un verde pastello */
-  .correct-answer {
+}
+/* Evidenziamo la risposta corretta in un verde pastello */
+.correct-answer {
     background-color: #c3fcd4;
     padding: 2px 4px;
     border-radius: 4px;
-  }
-  /* Responsive design per mobile */
-  @media (max-width: 480px) {
+}
+/* Responsive design per mobile */
+@media (max-width: 480px) {
     body {
-      margin: 10px;
+        margin: 10px;
+        font-size: 18px; /* Aumenta il font su dispositivi mobili */
     }
     h1 {
-      font-size: 1.2em;
+        font-size: 1.5em;
+        margin-bottom: 15px;
     }
     .domanda {
-      margin-bottom: 10px;
+        padding: 15px;
+        margin-bottom: 10px;
+        font-size: 1rem; /* Testo più leggibile */
     }
     button {
-      margin-bottom: 10px;
-      width: 100%;
-      font-size: 1rem;
+        margin-bottom: 10px;
+        width: 100%;
+        font-size: 1rem;
     }
     #container {
-      text-align: center;
+        text-align: center;
     }
-  }
+    .risultato {
+        font-size: 1.3rem; /* Aumenta dimensione del risultato finale */
+    }
+}

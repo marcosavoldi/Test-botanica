@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pannello di Controllo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button id="btnBack">Torna al Test</button>
+  <h1>Pannello di Controllo</h1>
+  <div id="info">
+    <p id="tentativi"></p>
+    <p id="mediaErrori"></p>
+    <p id="superati"></p>
+    <p id="nonSuperati"></p>
+  </div>
+  <h2>Le 5 Domande più spesso sbagliate</h2>
+  <div id="domandeFrequenti"></div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      // Pulsante per tornare all'index
+      document.getElementById('btnBack').addEventListener('click', () => {
+        window.location.href = "index.html";
+      });
+
+      mostraStatistiche();
+      mostraDomandePiuSbagliate();
+    });
+
+    function mostraStatistiche() {
+      let stat = JSON.parse(localStorage.getItem('statisticheTest'));
+      if (!stat) {
+        // Se non esiste, vuol dire che non è ancora stato fatto nessun test
+        document.getElementById('tentativi').textContent = "Nessun test effettuato finora.";
+        return;
+      }
+      // 1) Numero di tentativi totali
+      document.getElementById('tentativi').textContent = "Tentativi totali: " + stat.testTotali;
+
+      // 2) Media degli errori: errori totali / testTotali
+      let erroriTotali = stat.risposteDateComplessive - stat.risposteEsatteComplessive;
+      let mediaErrori = (stat.testTotali > 0) ? (erroriTotali / stat.testTotali).toFixed(2) : 0;
+      document.getElementById('mediaErrori').textContent = "Media errori per test: " + mediaErrori;
+
+      // 3) Numero di volte in cui il test è stato superato
+      document.getElementById('superati').textContent = "Test superati: " + stat.testSuperati;
+
+      // 4) Numero di volte in cui il test NON è stato superato
+      let nonSuperati = stat.testTotali - stat.testSuperati;
+      document.getElementById('nonSuperati').textContent = "Test non superati: " + nonSuperati;
+    }
+
+    function mostraDomandePiuSbagliate() {
+      let errori = JSON.parse(localStorage.getItem('domandeErrate'));
+      if (!errori) {
+        document.getElementById('domandeFrequenti').textContent = "Nessuna domanda errata registrata finora.";
+        return;
+      }
+      // Convertiamo l'oggetto in un array per poter ordinare
+      let arrErrori = Object.keys(errori).map(id => {
+        return {
+          id: id,
+          testo: errori[id].testo,
+          corretta: errori[id].corretta,
+          volteSbagliata: errori[id].volteSbagliata
+        };
+      });
+      // Ordiniamo decrescente in base a volteSbagliata
+      arrErrori.sort((a,b) => b.volteSbagliata - a.volteSbagliata);
+      // Prendiamo le prime 5
+      let top5 = arrErrori.slice(0, 5);
+
+      let container = document.getElementById('domandeFrequenti');
+      container.innerHTML = "";
+
+      top5.forEach((item, index) => {
+        let div = document.createElement('div');
+        div.className = 'domanda';
+
+        let numero = document.createElement('h3');
+        numero.textContent = `${index+1}) Domanda ID#${item.id} sbagliata ${item.volteSbagliata} volte`;
+        div.appendChild(numero);
+
+        let testoDomanda = document.createElement('p');
+        testoDomanda.textContent = "Testo: " + item.testo;
+        div.appendChild(testoDomanda);
+
+        let rispostaCorretta = document.createElement('p');
+        rispostaCorretta.textContent = "Risposta corretta: " + item.corretta;
+        div.appendChild(rispostaCorretta);
+
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
